@@ -2,7 +2,7 @@ import React from 'react';
 
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
-function Mapa() {
+function Map() {
 
     const styles = {
         mapa: {
@@ -26,4 +26,4 @@ function Mapa() {
     );
 }
 
-export default Mapa;
+export default Map;

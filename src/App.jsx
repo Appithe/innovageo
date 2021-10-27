@@ -1,16 +1,15 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 import './App.css';
-import { Box } from '@mui/system';
 
-import VistaMapa from './pages/mapa'
-import NavBar from './components/navBar'
+import MapView from './pages/MapView'
+import NavBar from './components/NavBar/navBar'
 
 function App() {
   return (
     <Container fluid>
       <NavBar />
-      <VistaMapa />
+      <MapView />
     </Container>
   );
 }
