@@ -1,7 +1,7 @@
 import React from 'react';
 import { Card, Button } from 'react-bootstrap';
 
-function GaleriaItem() {
+function ItemGallery() {
 
     const styles = {
         container: {
@@ -26,4 +26,4 @@ function GaleriaItem() {
     );
 }
 
-export default GaleriaItem;
+export default ItemGallery;

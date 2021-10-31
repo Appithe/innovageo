@@ -2,23 +2,23 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
-import Mapa from "../components/mapa";
-import Galeria from "../components/galeria";
-import NavBar from "../components/navBar";
+import Map from "../../components/Map/map";
+import Gallery from "./componets/Gallery/gallery";
 
-function VistaMapa() {
+
+function MapView() {
     return (
         <Container fluid>
             <Row>
                 <Col>
-                    <Galeria />
+                    <Gallery />
                 </Col>
                 <Col xs={7}>
-                    <Mapa />
+                    <Map />
                 </Col>
             </Row>
         </Container>
     );
 }
 
-export default VistaMapa
+export default MapView
