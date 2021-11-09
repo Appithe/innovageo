@@ -7,7 +7,7 @@ function NavBar() {
             <Stack direction="horizontal" gap={3}>
                 <div>
                     <Navbar>
-                        <Navbar.Brand>NavBar</Navbar.Brand>
+                        <Navbar.Brand>Innovageo</Navbar.Brand>
                     </Navbar>
                 </div>
                 <div>
@@ -19,9 +19,9 @@ function NavBar() {
                 </div>
                 <div className="ms-auto">
                     <Nav className="me-auto">
-                        <Nav.Link href="#home">Agregar Ubicación</Nav.Link>
-                        <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                            <NavDropdown.Item href="#action/3.1">Iniciar sesión</NavDropdown.Item>
+                        <Nav.Link href="#home" disabled>Agregar Ubicación</Nav.Link>
+                        <NavDropdown title="Perfil" id="basic-nav-dropdown">
+                            <NavDropdown.Item href="/login">Iniciar sesión</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
                 </div>

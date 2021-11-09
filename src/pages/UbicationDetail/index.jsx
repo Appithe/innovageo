@@ -2,7 +2,7 @@ import React from 'react';
 
 const UbicationDetail = () => {
     return(
-        <div></div>
+        <div>UbicationDetail</div>
     )
 }
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 const NewUbicationForm = () => {
     return(
-        <div></div>
+        <div>NewUbicationForm</div>
     )
 }
 
