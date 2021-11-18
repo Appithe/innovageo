@@ -15,6 +15,11 @@ function MapView() {
                         <ItemGallery />
                         <ItemGallery />
                     </Row>
+                    <Row>
+                        <ItemGallery />
+                        <ItemGallery />
+                        <ItemGallery />
+                    </Row>
                 </Col>
                 <Col xs={7}>
                     <Map />
