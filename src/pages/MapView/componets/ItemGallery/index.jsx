@@ -14,7 +14,7 @@ function ItemGallery() {
 
     return (
         <Card style={styles.container}>
-            <Card.Img variant="top" src="https://via.placeholder.com/206x158" />
+            <Card.Img variant="top" src="https://picsum.photos/id/1065/206/160"/>
             <Card.Body>
                 <Card.Title>Lorem Impsum</Card.Title>
                 <Card.Text style={{
