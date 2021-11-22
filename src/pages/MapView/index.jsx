@@ -3,15 +3,23 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col } from 'react-bootstrap';
 
 import Map from "../../components/Map/map";
-import Gallery from "./componets/Gallery/gallery";
-
+import ItemGallery from './componets/ItemGallery';
 
 function MapView() {
     return (
         <Container fluid>
             <Row>
                 <Col>
-                    <Gallery />
+                    <Row>
+                        <ItemGallery />
+                        <ItemGallery />
+                        <ItemGallery />
+                    </Row>
+                    <Row>
+                        <ItemGallery />
+                        <ItemGallery />
+                        <ItemGallery />
+                    </Row>
                 </Col>
                 <Col xs={7}>
                     <Map />
