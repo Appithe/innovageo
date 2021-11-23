@@ -4,7 +4,12 @@ import {
     Container,
     Image,
     Row,
+    InputGroup,
+    FormControl,
+    Button,
 } from 'react-bootstrap';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+
 
 import NavBar from '../../components/NavBar/navBar';
 import Map from "../../components/Map/map";
@@ -42,7 +47,7 @@ const UbicationDetail = () => {
             gridRow: '2 / span 1',
         },
         info: {
-            margin: '20px 20px',
+            margin: '20px 0px',
         },
         mapa: {
             width: '1210px',
@@ -65,15 +70,29 @@ const UbicationDetail = () => {
                 <Container style={styles.info}>
                     <Row>
                         <Col>
-                            <h4>Arrendador: </h4>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text>Arrendador</InputGroup.Text>
+                                <FormControl value="Juan Perez" readOnly />
+                            </InputGroup>
                         </Col>
                         <Col>
-                            <h4>Contacto: </h4>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text>Contacto</InputGroup.Text>
+                                <FormControl value="XXX-XXX-XXXX" readOnly />
+                                <Button variant="outline-secondary">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+                                        <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                                    </svg>
+                                </Button>
+                            </InputGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
-                            <h4>Numero de habitaciones: </h4>
+                            <InputGroup className="mb-3">
+                                <InputGroup.Text>Numero de habitaciones</InputGroup.Text>
+                                <FormControl value="1/N" readOnly />
+                            </InputGroup>
                         </Col>
                     </Row>
                 </Container>
@@ -102,7 +121,7 @@ const UbicationDetail = () => {
                 </Container>
                 <h2>Donde se ubica?</h2>
                 <Container style={styles.info}>
-                    <Map width={'1210px'} height={'744px'} enableZoom={false} lat={21.149838431448007} lng={-101.71072419504823} zoom={17}/>
+                    <Map width={'1210px'} height={'744px'} enableZoom={false} lat={21.149838431448007} lng={-101.71072419504823} zoom={17} />
                 </Container>
             </Container>
         </Container>
