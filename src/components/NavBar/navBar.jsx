@@ -3,7 +3,7 @@ import { Navbar, Nav, Form, Container, FormControl } from 'react-bootstrap';
 
 function NavBar() {
     return (
-        <Navbar bg="light" expand="lg">
+        <Navbar bg="light" expand="lg" className="sticky-top">
             <Container>
                 <Navbar.Brand href="/">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pin-map-fill m-1" viewBox="0 0 16 16">

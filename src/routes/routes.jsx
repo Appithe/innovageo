@@ -9,8 +9,8 @@ import UbicationDetail from '../pages/UbicationDetail';
 const Rutas = () => {
     return (
         <Routes>
-            <Route path="/login" element={<Login />} />
             <Route path="/" element={<App />} />
+            <Route path="/login" element={<Login />} />
             <Route path="/newUbicationForm" element={<NewUbicationForm />} />
             <Route path="/ubicationDetail" element={<UbicationDetail />} />
         </Routes>
