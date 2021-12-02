@@ -33,7 +33,7 @@ function MapView() {
                         <ItemGallery />
                     </Row>
                 </Col>
-                <Col xs={7}>
+                <Col xs={7} className="position-fixed end-0">
                     <Map width={'100%'} height={'100vh'} enableZoom={true} lat={21.152721752719273} lng={-101.71174153086338} zoom={20} />
                 </Col>
             </Row>
