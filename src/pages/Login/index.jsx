@@ -14,7 +14,6 @@ const Login = () => {
         loginCard: {
             height: '552px',
             width: '612px',
-            boxShadow: '5px 5px 15px 0px #9E9E9E',
             margin: '3em'
         },
         form: {
@@ -35,11 +34,13 @@ const Login = () => {
         }
     }
 
+    
+
     return (
         <Container>
             <NavBar />
             <Container style={styles.bodyContainer}>
-                <Card style={styles.loginCard}>
+                <Card className="shadow" style={styles.loginCard}>
                     <Card.Header>Iniciar sesión ó registro</Card.Header>
                     <Card.Body style={styles.formContainer}>
                         <Card.Title className="mb-5">Bienvenido</Card.Title>
