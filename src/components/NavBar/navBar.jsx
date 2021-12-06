@@ -1,7 +1,36 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Form, Container, FormControl } from 'react-bootstrap';
 
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
+
 function NavBar() {
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                const email = user.email;
+
+                console.log(uid);
+                console.log(email);
+
+            } else {
+                console.log('User is signed out');
+            }
+        });
+    })
+
+    const logOut = () => {
+        signOut(auth).then(() => {
+            console.log('User is signed out');
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     return (
         <Navbar bg="light" expand="lg" className="sticky-top">
             <Container>
@@ -38,8 +67,11 @@ function NavBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/newUbicationForm" disabled>Agregar ubicación</Nav.Link>
-                        <Nav.Link href="/login">Iniciar Sesión</Nav.Link>
+                    {/* TODO: disable when user isn't loged in */}
+                        <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> 
+                        <Nav.Link href="/login" >
+                            {user ? 'Cerrar sesión' : 'Iniciar sesión'}
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
