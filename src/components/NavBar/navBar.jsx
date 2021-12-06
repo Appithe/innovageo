@@ -67,7 +67,8 @@ function NavBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> // TODO: disable when user isn't loged in
+                    {/* TODO: disable when user isn't loged in */}
+                        <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> 
                         <Nav.Link href="/login" >
                             {user ? 'Cerrar sesión' : 'Iniciar sesión'}
                         </Nav.Link>
