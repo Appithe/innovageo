@@ -7,7 +7,6 @@ import MapView from './pages/MapView';
 function App() {
   return (
     <Container fluid>
-    
       <MapView />
     </Container>
   );
