@@ -91,6 +91,7 @@ const Login = () => {
             });
     }
 
+    // FIXME: ERROR auth/invalid-credential-or-provider-id
     const facebookCreateUser = () => {
 
         signInWithPopup(auth, facebookAuthProvider)
