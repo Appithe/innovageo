@@ -14,6 +14,8 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import NavBar from '../../components/NavBar/navBar';
 import Map from "../../components/Map/map";
 
+// TODO: implement CopyToClipboard logic
+
 const UbicationDetail = () => {
     const styles = {
         container: {

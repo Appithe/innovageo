@@ -7,6 +7,9 @@ import ItemGallery from './componets/ItemGallery';
 import NavBar from '../../components/NavBar/navBar';
 
 function MapView() {
+
+    // TODO: implement leaflet clustering
+    // TODO: implement something of Turf.js
     return (
         <Container fluid>
             <NavBar/>
