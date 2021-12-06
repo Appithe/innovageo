@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Container,
@@ -11,11 +11,13 @@ import {
     createUserWithEmailAndPassword,
     getAuth,
     GoogleAuthProvider,
+    FacebookAuthProvider,
     signInWithPopup,
 } from 'firebase/auth';
 
 import app from '../../firebase/firebaseConfig'
 import NavBar from '../../components/NavBar/navBar'
+
 
 const Login = () => {
     const styles = {
@@ -44,6 +46,7 @@ const Login = () => {
 
     const auth = getAuth(app);
     const googleAuthProvider = new GoogleAuthProvider();
+    const facebookAuthProvider = new FacebookAuthProvider();
 
     let navigate = useNavigate();
 
@@ -51,6 +54,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const simpleCreateUser = () => {
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
@@ -66,6 +70,7 @@ const Login = () => {
     }
 
     const googleCreateUser = () => {
+
         signInWithPopup(auth, googleAuthProvider)
             .then((result) => {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
@@ -76,18 +81,37 @@ const Login = () => {
             }).catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                const email = error.email;
+                const errorEmail = error.email;
                 const credential = GoogleAuthProvider.credentialFromError(error);
 
                 console.log(errorCode)
                 console.log(errorMessage)
-                console.log(email)
+                console.log(errorEmail)
                 console.log(credential)
             });
     }
 
     const facebookCreateUser = () => {
-        console.log('facebook');
+
+        signInWithPopup(auth, facebookAuthProvider)
+            .then((result) => {
+                const user = result.user;
+                const credential = FacebookAuthProvider.credentialFromResult(result);
+                const accessToken = credential.accessToken;
+
+                navigate("/")
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                const errorEmail = error.email;
+                const credential = FacebookAuthProvider.credentialFromError(error);
+
+                console.log(errorCode)
+                console.log(errorMessage)
+                console.log(errorEmail)
+                console.log(credential)
+            });
     }
 
     return (
