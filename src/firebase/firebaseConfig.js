@@ -1,10 +1,10 @@
 import { initializeApp } from "firebase/app";
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.FIREBASE_API_KEY,
+    apiKey: "AIzaSyBa48s2Glvd0mzfRJIEHt1YUW_AMy5HNzM",
     authDomain: "innovageo-5f173.firebaseapp.com",
     projectId: "innovageo-5f173",
     storageBucket: "innovageo-5f173.appspot.com",
@@ -13,4 +13,6 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
+
+export default app;
