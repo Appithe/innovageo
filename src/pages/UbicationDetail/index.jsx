@@ -14,7 +14,7 @@ import * as turf from '@turf/turf'
 
 import NavBar from '../../components/NavBar/navBar';
 
-// TODO: implement CopyToClipboard logic
+// TODO: implement CopyToClipboard logic Hugo
 
 function Map(props) {
 
@@ -26,7 +26,7 @@ function Map(props) {
     }
 
     const position = [props.lat, props.lng];
-    const ulsa = [21.152721752719273, -101.71174153086338];
+    const ulsa = [21.15071, -101.7111];
 
     const polyline = [
         position,
