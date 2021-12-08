@@ -11,7 +11,8 @@ function ItemGallery(props) {
         },
     }
 
-    const srcImg = 'https://picsum.photos/seed/'+props.directionName+'/206/160';
+    const srcImg = 'https://picsum.photos/seed/'+props.lugarID+'/206/160';
+    const url = '/ubicationDetail?' + props.lugarID;
 
     return (
         <Card style={styles.container}>
@@ -27,7 +28,7 @@ function ItemGallery(props) {
                     Some quick example text to build on the card title and make up the bulk of
                     the card's content.
                 </Card.Text>
-                <Button variant="primary" href='/ubicationDetail'>Ver mas</Button>
+                <Button variant="primary" href={url}>Ver mas</Button>
             </Card.Body>
         </Card >
     );

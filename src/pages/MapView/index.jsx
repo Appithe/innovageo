@@ -81,22 +81,24 @@ function Map(props) {
     );
 }
 
-// TODO: implement leaflet clustering Joel
-// TODO: implement something of Turf.js Joel
-// TODO: load ubicactions from database Joel
-// TODO: load markers of randomPoint Joel
+// TODO: implement leaflet clustering
+// TODO: show the randomPoints like markers on the map
 
 function MapView() {
-    const [direccion_lugar, setDireccionLugar] = useState('');
-    const [lugarID, setlugarID] = useState('');
+    const [lugares, setLugares] = useState([])
 
-    window.onload = async () => {
+    useEffect(() => {
+        getLugares()
+    }, [])
+
+    async function getLugares() {
         const querySnapshot = await getDocs(collection(db, "lugares"));
-        querySnapshot.forEach((doc) => {
-            setlugarID(doc.id);
-            setDireccionLugar(doc.data().direccion_lugar);
-            console.log(doc.data());
-        });
+        setLugares(
+            querySnapshot.docs.map((doc) => ({
+                id: doc.id,
+                direccion_lugar: doc.data().direccion_lugar
+            }))
+        );
     }
 
     return (
@@ -105,18 +107,11 @@ function MapView() {
             <Row>
                 <Col xs={5}>
                     <Row>
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
-                        <ItemGallery directionName={direccion_lugar} itemID={lugarID} xs={4} md={6} />
+                        {
+                            lugares.map((lugar) => (
+                                <ItemGallery directionName={lugar.direccion_lugar} lugarID={lugar.id} xs={4} md={6} />
+                            ))
+                        }
                     </Row>
                 </Col>
                 <Col xs={7} className="position-fixed end-0">
