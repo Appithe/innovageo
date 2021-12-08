@@ -75,7 +75,6 @@ function Map(props) {
                     Universidad de LaSalle Bajio
                 </Popup>
             </Marker>
-            {/* <Marker position={point.geometry.coordinates}></Marker> */}
             <Polygon pathOptions={purpleOptions} positions={polygon} />
         </MapContainer>
     );
