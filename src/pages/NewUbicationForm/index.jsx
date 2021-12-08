@@ -3,19 +3,28 @@ import {
     Container,
     Row,
     Col,
-    Navbar,
     Form,
     Button,
     Modal
 } from 'react-bootstrap';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer } from 'react-leaflet';
+import { collection, addDoc } from 'firebase/firestore';
+import db from '../../firebase/database'
 
+import NavBar from '../../components/NavBar/navBar';
+
+// TODO: implement leaflet geocoding 
 const NewUbicationForm = () => {
 
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const [nombre, setNombre] = useState('');
+    const [contacto, setContacto] = useState('');
+    const [habitaciones, setHabitaciones] = useState('');
+    const [direccion_lugar, setDireccionLugar] = useState('');
 
     const styles = {
         mapa: {
@@ -24,46 +33,50 @@ const NewUbicationForm = () => {
         },
     }
 
-    const position ={
+    const position = {
         lat: 21.116667,
         lng: -101.683334
     }
 
+    const createUbucation = async () => {
+        try {
+            const docRef = await addDoc(collection(db, "lugares"), {
+                nombre: nombre,
+                contacto: contacto,
+                habitaciones: habitaciones,
+                direccion_lugar: direccion_lugar,
+            });
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    }
+
     return (
         <Container>
-            <Navbar bg="light" expand="lg" className="sticky-top">
-                <Container>
-                    <Navbar.Brand href="/">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-pin-map-fill m-1" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M3.1 11.2a.5.5 0 0 1 .4-.2H6a.5.5 0 0 1 0 1H3.75L1.5 15h13l-2.25-3H10a.5.5 0 0 1 0-1h2.5a.5.5 0 0 1 .4.2l3 4a.5.5 0 0 1-.4.8H.5a.5.5 0 0 1-.4-.8l3-4z" />
-                            <path fill-rule="evenodd" d="M4 4a4 4 0 1 1 4.5 3.969V13.5a.5.5 0 0 1-1 0V7.97A4 4 0 0 1 4 3.999z" />
-                        </svg>
-                        Inovvageo
-                    </Navbar.Brand>
-                </Container>
-            </Navbar>
+            <NavBar />
             <Form className="m-4">
                 <Form.Group as={Row} className="mb-3" controlId="formBasicEmail">
                     <Form.Label column sm={2}>Nombre del arrendador*</Form.Label>
                     <Col sm={10}>
-                        <Form.Control placeholder="Nombre" />
+                        <Form.Control placeholder="Nombre" onChange={(e) => setNombre(e.target.value)} />
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Telefono del arrendador*</Form.Label>
                     <Col sm={10}>
-                        <Form.Control placeholder="Numero" />
+                        <Form.Control placeholder="Numero" onChange={(e) => setContacto(e.target.value)} />
                     </Col>
                 </Form.Group>
 
                 <Form.Group as={Row} className="mb-3" controlId="formBasicPassword">
                     <Form.Label column sm={2}>Numero de habitaciones*</Form.Label>
                     <Col sm={10}>
-                        <Form.Control type="number" placeholder="Numero de habitaciones" />
+                        <Form.Control type="number" placeholder="Numero de habitaciones" onChange={(e) => setHabitaciones(e.target.value)} />
                     </Col>
                 </Form.Group>
-                <Container>
+                {/* <Container>
                     <Row>
                         <Col>
                             <Container className="p-3 mb-2 border">
@@ -113,11 +126,11 @@ const NewUbicationForm = () => {
                             </Container>
                         </Col>
                     </Row>
-                </Container>
+                </Container> */}
                 <Form.Group as={Row} className="mb-3" controlId="formBasicEmail">
                     <Form.Label column sm={2}>Dirección del lugar*</Form.Label>
                     <Col sm={10}>
-                        <Form.Control placeholder="Dirección" />
+                        <Form.Control placeholder="Dirección" onChange={(e) => setDireccionLugar(e.target.value)} />
                     </Col>
                 </Form.Group>
                 <MapContainer center={position} zoom={13} style={styles.mapa}>
@@ -126,8 +139,11 @@ const NewUbicationForm = () => {
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
                 </MapContainer>
-                <Button variant="primary" type="submit" className="my-3">
-                    Submit
+                <Button variant="primary" className="my-3" onClick={createUbucation}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg me-1" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                    </svg>
+                    Agregar ubicación
                 </Button>
             </Form>
         </Container>

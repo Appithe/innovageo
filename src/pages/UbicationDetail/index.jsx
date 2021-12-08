@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
     Col,
     Container,
@@ -8,13 +8,73 @@ import {
     FormControl,
     Button,
 } from 'react-bootstrap';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
-
+import * as turf from '@turf/turf'
+import { Toaster, toast } from 'react-hot-toast'
+import { doc, getDoc } from "firebase/firestore";
+import db from '../../firebase/database'
 
 import NavBar from '../../components/NavBar/navBar';
-import Map from "../../components/Map/map";
+
+function Map(props) {
+
+    const styles = {
+        mapa: {
+            width: props.width,
+            height: props.height,
+        },
+    }
+
+    const position = [props.lat, props.lng];
+    const ulsa = [21.15071, -101.7111];
+
+    const polyline = [
+        position,
+        ulsa,
+    ];
+    const limeOptions = { color: 'lime' };
+
+    var from = turf.point(position);
+    var to = turf.point(ulsa);
+    var options = { units: 'kilometers' };
+
+    var distance = turf.distance(from, to, options);
+
+    return (
+        <MapContainer center={position} zoom={props.zoom} scrollWheelZoom={props.enableZoom} style={styles.mapa}>
+            <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            />
+            <Polyline pathOptions={limeOptions} positions={polyline} >
+                <Popup>
+                    Distancia: {Math.round(distance * 1000) + 'm'}
+                </Popup>
+            </Polyline>
+            <Marker position={position}>
+                <Popup>
+                    Cima del sol 151
+                </Popup>
+            </Marker>
+            <Marker position={ulsa}>
+                <Popup>
+                    Universidad de LaSalle Bajio
+                </Popup>
+            </Marker>
+        </MapContainer>
+    );
+}
 
 const UbicationDetail = () => {
+    const [id, setId] = useState();
+    const [contacto, setContacto] = useState();
+    const [direccionLugar, setDireccionLugar] = useState();
+    const [habitaciones, setHabitaciones] = useState();
+    const [nombre, setNombre] = useState();
+
+    const srcMainImg = 'https://picsum.photos/seed/' + id + '/595/512';
+
     const styles = {
         container: {
             marginTop: '50px',
@@ -55,13 +115,47 @@ const UbicationDetail = () => {
         }
     }
 
+    useEffect(() => {
+        getLugar();
+    })
+
+    useEffect(() => {
+        getIdFromUrl();
+    }, [])
+
+    function getIdFromUrl() {
+        var url = document.location.href;
+        if (url.indexOf('?') > 0) {
+            setId(url.split('?')[1]);
+        }
+    }
+
+    async function getLugar() {
+        try {
+            const docRef = doc(db, "lugares", id);
+            const docSnap = await getDoc(docRef);
+
+            if (docSnap.exists()) {
+                setContacto(docSnap.get("contacto"));
+                setDireccionLugar(docSnap.get("direccion_lugar"));
+                setHabitaciones(docSnap.get("habitaciones"));
+                setNombre(docSnap.get("nombre"));
+            } else {
+                console.log("No such document!");
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
     return (
         <Container fluid>
+            <Toaster />
             <NavBar />
             <Container style={styles.container}>
-                <h1>Calle del Llano 234</h1>
+                <h1>{direccionLugar}</h1>
                 <Container style={styles.gridContainer}>
-                    <Image style={styles.mainImage} src="https://picsum.photos/id/1031/595/512" rounded />
+                    <Image style={styles.mainImage} src={srcMainImg} rounded />
                     <Image style={styles.topLeft} src="https://picsum.photos/id/1065/297/247" rounded />
                     <Image style={styles.topRight} src="https://picsum.photos/id/1068/297/247" rounded />
                     <Image style={styles.bottomLeft} src="https://picsum.photos/id/163/297/247" rounded />
@@ -72,26 +166,28 @@ const UbicationDetail = () => {
                         <Col>
                             <InputGroup className="mb-3">
                                 <InputGroup.Text>Arrendador</InputGroup.Text>
-                                <FormControl value="Juan Perez" readOnly />
+                                <FormControl value={nombre} readOnly />
                             </InputGroup>
                         </Col>
                         <Col>
                             <InputGroup className="mb-3">
                                 <InputGroup.Text>Contacto</InputGroup.Text>
-                                <FormControl value="XXX-XXX-XXXX" readOnly />
-                                <Button variant="outline-secondary">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
-                                        <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
-                                    </svg>
-                                </Button>
+                                <FormControl value={contacto} readOnly />
+                                <CopyToClipboard text={contacto} >
+                                    <Button variant="outline-secondary" onClick={() => toast("Texto copiado")}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-files" viewBox="0 0 16 16">
+                                            <path d="M13 0H6a2 2 0 0 0-2 2 2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm0 13V4a2 2 0 0 0-2-2H5a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1zM3 4a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4z" />
+                                        </svg>
+                                    </Button>
+                                </CopyToClipboard>
                             </InputGroup>
                         </Col>
                     </Row>
                     <Row>
                         <Col>
                             <InputGroup className="mb-3">
-                                <InputGroup.Text>Numero de habitaciones</InputGroup.Text>
-                                <FormControl value="1/N" readOnly />
+                                <InputGroup.Text>Numero de habitaciones disponibles</InputGroup.Text>
+                                <FormControl value={habitaciones} readOnly />
                             </InputGroup>
                         </Col>
                     </Row>
@@ -121,7 +217,7 @@ const UbicationDetail = () => {
                 </Container>
                 <h2>Donde se ubica?</h2>
                 <Container style={styles.info}>
-                    <Map width={'1210px'} height={'744px'} enableZoom={false} lat={21.149838431448007} lng={-101.71072419504823} zoom={17} />
+                    <Map width={'1210px'} height={'744px'} enableZoom={false} lat={21.150306} lng={-101.713420} zoom={17} />
                 </Container>
             </Container>
         </Container>

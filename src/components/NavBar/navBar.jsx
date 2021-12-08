@@ -1,7 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Form, Container, FormControl } from 'react-bootstrap';
 
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
+
+
 function NavBar() {
+
+    const [isLogin, setIslogin] = useState(false)
+    const [route, setRoute] = useState("/login");
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    useEffect(() => {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                setIslogin(true)
+                setRoute("/")
+                console.log(user.email);
+            } else {
+                setRoute("/login")
+                setIslogin(false)
+            }
+        });
+    }, [])
+
+    const logOut = () => {
+        signOut(auth).then(() => {
+            console.log('User is signed out');
+            setRoute("/login")
+            setIslogin(false)
+        }).catch((error) => {
+            console.log(error);
+        });
+    }
+
     return (
         <Navbar bg="light" expand="lg" className="sticky-top">
             <Container>
@@ -38,8 +70,14 @@ function NavBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                        <Nav.Link href="/newUbicationForm" disabled>Agregar ubicación</Nav.Link>
-                        <Nav.Link href="/login">Iniciar Sesión</Nav.Link>
+                        {
+                            isLogin ?
+                                <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> :
+                                null
+                        }
+                        <Nav.Link href={route} onClick={logOut}>
+                            {isLogin ? 'Cerrar sesión' : 'Iniciar sesión'}
+                        </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
