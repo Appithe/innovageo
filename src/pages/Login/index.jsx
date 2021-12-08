@@ -50,8 +50,6 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // TODO: crear persistencia del estado de autenticación https://firebase.google.com/docs/auth/web/auth-state-persistence?authuser=0#web-version-9_1
-
     const simpleCreateUser = () => {
         createUserWithEmailAndPassword(auth, email, password)
             .then((userCredential) => {

@@ -13,7 +13,7 @@ import db from '../../firebase/database'
 
 import NavBar from '../../components/NavBar/navBar';
 
-// TODO: implement leaflet geocoding
+// TODO: implement leaflet geocoding 
 const NewUbicationForm = () => {
 
     const [show, setShow] = useState(false);

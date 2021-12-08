@@ -11,14 +11,9 @@ function NavBar() {
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                const uid = user.uid;
-                const email = user.email;
-
-                console.log(uid);
-                console.log(email);
-
+                
             } else {
-                console.log('User is signed out');
+                
             }
         });
     })
@@ -67,7 +62,7 @@ function NavBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                    {/* TODO: disable when user isn't loged in */}
+                    {/* TODO: disable when user isn't loged in Karen */}
                         <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> 
                         <Nav.Link href="/login" >
                             {user ? 'Cerrar sesión' : 'Iniciar sesión'}
