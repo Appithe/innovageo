@@ -6,21 +6,29 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 
 function NavBar() {
 
+    const [isLogin, setIslogin] = useState(false)
+    const [route, setRoute] = useState("/login");
+
     const auth = getAuth();
     const user = auth.currentUser;
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                
+                setIslogin(true)
+                setRoute("/")
+                console.log(user.email);
             } else {
-                
+                setRoute("/login")
+                setIslogin(false)
             }
         });
-    })
+    }, [])
 
     const logOut = () => {
         signOut(auth).then(() => {
             console.log('User is signed out');
+            setRoute("/login")
+            setIslogin(false)
         }).catch((error) => {
             console.log(error);
         });
@@ -62,10 +70,13 @@ function NavBar() {
                         style={{ maxHeight: '100px' }}
                         navbarScroll
                     >
-                    {/* TODO: disable when user isn't loged in Karen */}
-                        <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> 
-                        <Nav.Link href="/login" >
-                            {user ? 'Cerrar sesión' : 'Iniciar sesión'}
+                        {
+                            isLogin ?
+                                <Nav.Link href="/newUbicationForm">Agregar ubicación</Nav.Link> :
+                                null
+                        }
+                        <Nav.Link href={route} onClick={logOut}>
+                            {isLogin ? 'Cerrar sesión' : 'Iniciar sesión'}
                         </Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
